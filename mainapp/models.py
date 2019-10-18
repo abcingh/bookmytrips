@@ -18,7 +18,7 @@ class Tour(models.Model):
     cost = models.IntegerField()
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.CharField(max_length=100)
     dob = models.DateField()
     gender = models.CharField(choices=gender_choices, max_length=10)

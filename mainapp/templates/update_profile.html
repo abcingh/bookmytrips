@@ -1,8 +1,8 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ user_form|bootstrap }}
-    {{ profile_form|bootstrap }}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
     <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Save changes</button></p>
 </form>
              
