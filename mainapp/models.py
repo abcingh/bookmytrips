@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.forms import ModelForm
+
 
 
 User = settings.AUTH_USER_MODEL
@@ -9,8 +11,9 @@ gender_choices = (('male', 'male'),
 class Tour(models.Model):
     country = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
-    stay_duration = models.CharField(max_length=50)
+    tour_duration = models.IntegerField()
     title = models.TextField()
+    image = models.CharField(max_length=100, null=True)
     description = models.TextField()
     cost = models.IntegerField()
 
