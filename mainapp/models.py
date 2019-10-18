@@ -24,11 +24,11 @@ class Profile(models.Model):
     description = models.TextField()
     
 class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    tour = models.ForeignKey(Tour, on_delete = models.CASCADE)
     head_count = models.IntegerField(default = 0)
     tour_date = models.DateField()
     booking_date = models.DateField(("Date"), default=date.today)
-    user = models.ForeignKey(User, on_delete= models.CASCADE)
-    tour = models.ForeignKey(Tour, on_delete = models.CASCADE)
     sell_status = models.BooleanField(default=False)
     
     

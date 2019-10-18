@@ -56,42 +56,42 @@ def update_profile(request):
         'profile_form': profile_form
     })
     
-def select_tour(request, tour_id):
-    tour = get_object_or_404(Tour, id=tour_id)
-    context = {
-        "tour":tour
-    }
-    return render(request, "add_to_cart.html", context)
+# def select_tour(request, tour_id):
+#     tour = get_object_or_404(Tour, id=tour_id)
+#     context = {
+#         "tour":tour
+#     }
+#     return render(request, "add_to_cart.html", context)
     
-def add_to_cart(request, tour_id):
-    if request.method =="POST":
-        head_count = request.POST.get("head_count")
-        tour_date = request.POST.get("tour_date")
-        tour = get_object_or_404(Tour, id=tour_id)
-        user = request.user
-        cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user)
-        cart.save()
-        # =========>do some thing to get all cart value object
+# def add_to_cart(request, tour_id):
+#     if request.method =="POST":
+#         head_count = request.POST.get("head_count")
+#         tour_date = request.POST.get("tour_date")
+#         tour = get_object_or_404(Tour, id=tour_id)
+#         user = request.user
+#         cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user)
+#         cart.save()
+#         # =========>do some thing to get all cart value object
         
-        cart_id ="quesyset[::-1]"
-        messages.success(request,'Items added to cart')
-        return redirect("/checkout/"+str())
-    return render(request, 'profile.html')
-    # return redirect(reverse('checkout'))
+#         cart_id ="quesyset[::-1]"
+#         messages.success(request,'Items added to cart')
+#         return redirect("/checkout/"+str())
+#     return render(request, 'profile.html')
+#     # return redirect(reverse('checkout'))
 
 
-def checkout(request, cart_id):
-    if request.method =="POST":
+# def checkout(request, cart_id):
+#     if request.method =="POST":
         
-        # cart = Cart.objects.all()[::-1]
-        context = {
-            "cart":cart
-        }
-        return render(request, 'checkout.html', context)
+#         # cart = Cart.objects.all()[::-1]
+#         context = {
+#             "cart":cart
+#         }
+#         return render(request, 'checkout.html', context)
 
-def checkout_complete(request):
-    #some process for checking out
-    return 
+# def checkout_complete(request):
+#     #some process for checking out
+#     return 
 
 
 

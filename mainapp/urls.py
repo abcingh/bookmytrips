@@ -6,9 +6,8 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     path('profile', views.profile, name = 'profile'),
     path('profile/update/', views.update_profile, name = 'update'),
-    path('something/<int:tour_id>', views.select_tour, name = 'select_tour'),
-    path('something/<int:tour_id>/add_to_cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart')
-
+    # path('something/<int:tour_id>', views.select_tour, name = 'select_tour'),
+    # path('something/<int:tour_id>/add_to_cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart')
 
 ]
 
