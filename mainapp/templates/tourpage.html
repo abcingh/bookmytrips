@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>{{country}} - Tourism</title>
+</head>
+<body>
+    <div>
+        <div  style="background-image: url(https://d3u4hzlr7ozpoo.cloudfront.net/assets/banner-image-tours-ef50aa6ecfaf707fcc3ac0b73f418209.jpg); height:600px; width:100%; background-size: 100% 100%;">
+            {% include 'header.html' %}
+            <div style="display: flex; justify-content:center; height:100%; flex-direction:column;">
+                <div style="width: 50%;">
+                    <div style="padding-left:20px;">
+                        <h2>BookMytTrip Tours</h1>
+                        <h4>Experimantal Journeys will make you a storyteller</h3>
+                    </div>
+                    <div style="padding-left:20px;">
+                        <form action="" method="POST">
+                            {% csrf_token %} {{ form }}
+                            <button class="btn btn-primary" type="submit">Go</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <h3 style="margin:90px;">BookMyTrip Recommendations for {{country}}</h3>
+        <div style="display: flex; justify-content:space-between; margin:90px;"> 
+            {% for tour in tours %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tour.title }}</h5>
+                    <p class="card-text">book</p>
+                    <a href="# " class="btn btn-primary">Book Events</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+ 
+</body>
+</html>
+
