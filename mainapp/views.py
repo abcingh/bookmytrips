@@ -14,6 +14,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import Tour, Cart
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from PayTm import Checksum
+MERCHANT_KEY = "tEgXXdEtSgi_twnD"
 
 
 
@@ -96,7 +99,6 @@ def add_to_cart(request, tour_id):
 
 
 def checkout(request, cart_id):
-    # if request.method =="POST":
     cart_id = int(cart_id)
     cart = Cart.objects.get(id = cart_id)
     cost = cart.tour.cost
@@ -106,36 +108,46 @@ def checkout(request, cart_id):
         "cart":cart,
         "total_cost": total_cost
     }
+    if request.method=="POST":
+        
+        #request the PAYTM to transfer the amount after payment of user
+        param_dict = {
+
+                    'MID': 'TqSBtO36574291160813',
+                    'ORDER_ID': str(cart.id),
+                    'TXN_AMOUNT': str(total_cost),
+                    'CUST_ID': request.user.email,
+                    'INDUSTRY_TYPE_ID': 'Retail',
+                    'WEBSITE': 'DEFAULT',
+                    'CHANNEL_ID': 'WEB',
+                    'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
+
+        }
+        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
+        return render(request, 'paytm.html', {'param_dict': param_dict})
     return render(request, 'checkout.html', context)
 
-# def checkout_complete(request):
-#     #some process for checking out
-#     return 
+
+#handles the paytm post request
+@csrf_exempt
+def handlerequest(request):
+    # paytm will send you post request here
+    form = request.POST
+    response_dict = {}
+    for i in form.keys():
+        response_dict[i] = form[i]
+        if i == 'CHECKSUMHASH':
+            checksum = form[i]
+
+    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
+    if verify:
+        if response_dict['RESPCODE'] == '01':
+            print('order successful')
+        else:
+            print('order was not successful because' + response_dict['RESPMSG'])
+    return render(request, 'shop/paymentstatus.html', {'response': response_dict})
 
 
-
-
-
-    # if request.method =="POST":
-    #     content_title = request.POST.get("content_title")
-    #     cotegory = request.POST.get("content_category")
-    #     content_body = request.POST.get("content_body")
-
-    #     data = Data()
-    #     data.user = request.user
-    #     data.content_title = content_title
-    #     data.cotegory = cotegory
-    #     data.content_body = content_body
-    #     data.save()
-    #     messages.success(request,'Thank you for submitting your creation  -Team VISMRITA')
-    #     return redirect("/submit_creation/")
-    # return render(request,"profiles/submit_creation.html",{})
-
-
-    # head_count = models.IntegerField(default = 0)
-    # tour_date = models.DateField()
-    # user = models.ForeignKey(User, on_delete= models.CASCADE)
-    # tour = models.ForeignKey(Tour, on_delete = models.CASCADE)
 
 
 
