@@ -67,38 +67,46 @@ def update_profile(request):
         'profile_form': profile_form
     })
     
-# def select_tour(request, tour_id):
-#     tour = get_object_or_404(Tour, id=tour_id)
-#     context = {
-#         "tour":tour
-#     }
-#     return render(request, "add_to_cart.html", context)
+def select_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    context = {
+        "tour":tour
+    }
+    return render(request, "add_to_cart.html", context)
     
-# def add_to_cart(request, tour_id):
-#     if request.method =="POST":
-#         head_count = request.POST.get("head_count")
-#         tour_date = request.POST.get("tour_date")
-#         tour = get_object_or_404(Tour, id=tour_id)
-#         user = request.user
-#         cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user)
-#         cart.save()
-#         # =========>do some thing to get all cart value object
-        
-#         cart_id ="quesyset[::-1]"
-#         messages.success(request,'Items added to cart')
-#         return redirect("/checkout/"+str())
-#     return render(request, 'profile.html')
-#     # return redirect(reverse('checkout'))
+def add_to_cart(request, tour_id):
+    print("abhishek")
+    if request.method =="POST":
+        head_count = request.POST.get("head_count")
+        tour_date = request.POST.get("tour_date")
+        tour = get_object_or_404(Tour, id=tour_id)
+        print(tour)
+        user = request.user
+        print("user", user)
+        print("tour", tour)
+        print("head", head_count)
+        print("tour_date", tour_date)
+        cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user, tour = tour)
+        cart.save()  
+        messages.success(request,'Items added to cart')
+        return redirect("/checkout/"+str(cart.id))
+        print("user", user)
+    return render(request, 'add_to_cart.html')
+    # return redirect(reverse('checkout'))
 
 
-# def checkout(request, cart_id):
-#     if request.method =="POST":
-        
-#         # cart = Cart.objects.all()[::-1]
-#         context = {
-#             "cart":cart
-#         }
-#         return render(request, 'checkout.html', context)
+def checkout(request, cart_id):
+    # if request.method =="POST":
+    cart_id = int(cart_id)
+    cart = Cart.objects.get(id = cart_id)
+    cost = cart.tour.cost
+    head_count = cart.head_count
+    total_cost = cost*head_count
+    context = {
+        "cart":cart,
+        "total_cost": total_cost
+    }
+    return render(request, 'checkout.html', context)
 
 # def checkout_complete(request):
 #     #some process for checking out

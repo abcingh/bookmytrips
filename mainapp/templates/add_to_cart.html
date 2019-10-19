@@ -1,0 +1,22 @@
+<h3 hidden>{{tour.id}}</h3>
+<h3>Country ->{{tour.country}}</h3>
+<h3>palce -> {{tour.place}}</h3>
+<h3>duration ->{{tour.tour_duration}}</h3>
+<h3>title ->{{tour.title}}</h3>
+<h3>description ->{{tour.description}}</h3>
+<h3>cost ->{{tour.cost}}</h3>
+
+<form method="post" id="submit_creation" action="/add_to_cart/{{tour.id}}" >
+    {% csrf_token %}
+
+    <div class="form-group">
+    <label for="head_count"> No. of person </label>
+    <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
+    </div>
+
+    <div class="form-group">
+    <label for="tour_date">tour date</label>
+    <input type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="tour_date" required>
+    </div>
+    <p class="text-center"><button type="submit" class="btn btn-outline-info">Add to cart</button></p>
+</form>
