@@ -16,7 +16,7 @@ from .models import Tour, Cart
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from PayTm import Checksum
-MERCHANT_KEY = "tEgXXdEtSgi_twnD"
+MERCHANT_KEY = "xxxxxxxxxx"
 
 
 
@@ -113,7 +113,7 @@ def checkout(request, cart_id):
         #request the PAYTM to transfer the amount after payment of user
         param_dict = {
 
-                    'MID': 'TqSBtO36574291160813',
+                    'MID': 'xyxyxyxyx',
                     'ORDER_ID': str(cart.id),
                     'TXN_AMOUNT': str(total_cost),
                     'CUST_ID': request.user.email,
