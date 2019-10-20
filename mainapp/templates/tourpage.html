@@ -27,14 +27,27 @@
             </div>
     
         </div>
+        {% if search %}
+        <div style="display: flex; justify-content:space-around; margin:50px;">
+        {% for s in search %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.title }}</h5>
+                    <p class="card-text">book</p>
+                    <a href="" class="btn btn-primary">Book Event</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% endif %}
         <h3 style="margin:90px;">BookMyTrip Recommendations for {{country}}</h3>
         <div style="display: flex; justify-content:space-between; margin:90px;"> 
             {% for tour in tours %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ tour.title }}</h5>
-                    <p class="card-text">book</p>
-                    <a href="# " class="btn btn-primary">Book Events</a>
+                    <p class="card-text">{{ tour.cost }}</p>
+                    <a href="#" class="btn btn-primary">Book Event</a>
                 </div>
             </div>
             {% endfor %}

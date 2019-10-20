@@ -7,6 +7,7 @@ gender_choices = (('male', 'male'),
                 ('female', 'female'))
 
 class Tour(models.Model):
+    __searchable__ = ['title', 'country']
     country = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
     tour_duration = models.IntegerField()

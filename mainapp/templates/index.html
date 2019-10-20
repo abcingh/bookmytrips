@@ -21,7 +21,7 @@
                     <div>
                         <form action="" method="POST">
                             {% csrf_token %} {{ form }}
-                            <button class="btn btn-primary" type="submit">Go</button>
+                            <button class="btn btn-primary"  type="submit">Go</button>
                         </form>
                     </div>
                 </div>
@@ -51,6 +51,19 @@
         </div>
     </div>
     <h2 style="text-align: center; padding-top:20px;">Curated Travel Experiences Across The Globe</h2>
+    {% if search %}
+        <div style="display: flex; justify-content:space-around; margin:50px;">
+        {% for s in search %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.title }}</h5>
+                    <p class="card-text">book</p>
+                    <a href="" class="btn btn-primary">Book Event</a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
     <div style="display: flex; justify-content:space-around; margin:50px;">
         {% for country in countries %}
         <div class="card" style="width: 18rem;">
