@@ -23,6 +23,13 @@ MERCHANT_KEY = "xxxxxxxxxx"
 User = get_user_model()
 
 
+def error_404_view(request, exception):
+    return render(request,'error_404.html')
+
+def error_500_view(request):
+    return render(request,'error_500.html')
+
+
 def index(request):
     countries = Tour.objects.values('country').annotate(Count('country'))
     country_list = []
@@ -92,24 +99,17 @@ def add_to_cart(request, tour_id):
         head_count = request.POST.get("head_count")
         tour_date = request.POST.get("tour_date")
         tour = get_object_or_404(Tour, id=tour_id)
-        print(tour)
-        user = request.user
-        print("user", user)
-        print("tour", tour)
-        print("head", head_count)
-        print("tour_date", tour_date)
         cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user, tour = tour)
         cart.save()  
         messages.success(request,'Items added to cart')
         return redirect("/checkout/"+str(cart.id))
-        print("user", user)
     return render(request, 'add_to_cart.html')
     # return redirect(reverse('checkout'))
 
 
 def checkout(request, cart_id):
     cart_id = int(cart_id)
-    cart = Cart.objects.get(id = cart_id)
+    cart = get_object_or_404(Cart, id = cart_id)
     cost = cart.tour.cost
     head_count = cart.head_count
     total_cost = cost*head_count
@@ -158,21 +158,11 @@ def handlerequest(request):
 
 
 def booked_tours_detail(request,order_id ):
-    cart_obj = Cart.objects.get(id = order_id)
+    cart_obj = get_object_or_404(Cart, id=order_id)
     total_cost = (cart_obj.tour.cost)*(cart_obj.head_count)
     context = {
         "cart_obj":cart_obj,
         "total_cost":total_cost 
     }
     return render(request, 'booked_tours_detail.html', context)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
