@@ -135,11 +135,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"), 
+# ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"), 
-]
+
+
+
+
+
+# MEDIA_ROOT = u'/home/vismritaresource/vismritaproject/media'
+# MEDIA_URL = '/media/'
+# STATIC_ROOT = u'/home/vismritaresource/vismritaproject/static'
+# STATIC_URL = '/static/'
+
+
+
+
 
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
@@ -160,3 +177,18 @@ ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
   
 # redirects to profile page if not configured. 
 # LOGIN_REDIRECT_URL = '/accounts/email/'
+
+
+
+#
+DJANGORESIZED_DEFAULT_SIZE = [200, 200]
+DJANGORESIZED_DEFAULT_QUALITY = 60
+# DJANGORESIZED_DEFAULT_KEEP_META = True
+# DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'JPEG'
+# DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg"}
+# DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
+
+
+
+

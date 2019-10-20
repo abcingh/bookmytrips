@@ -1,5 +1,9 @@
 from django.urls import path
 from mainapp import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 app_name = 'main'
 urlpatterns = [
@@ -12,5 +16,7 @@ urlpatterns = [
     path('add_to_cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart'),
     path('checkout/<int:cart_id>', views.checkout, name = 'checkout'),
     path('handlerequest', views.handlerequest, name = 'handlerequest')
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if settings.DEBUG:
+    urlpatterns+= (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ( 'dob', 'gender','description')
+        fields = ( 'dob', 'gender','description', 'avatar')
         widgets = {
             'dob': DateInput(),
             'description': forms.Textarea(attrs={'placeholder': 'Write some thing about you'})
