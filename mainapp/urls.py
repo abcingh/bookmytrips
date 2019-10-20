@@ -15,7 +15,9 @@ urlpatterns = [
     path('tour_id/<int:tour_id>', views.select_tour, name = 'select_tour'),
     path('add_to_cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart'),
     path('checkout/<int:cart_id>', views.checkout, name = 'checkout'),
-    path('handlerequest', views.handlerequest, name = 'handlerequest')
+    path('handlerequest', views.handlerequest, name = 'handlerequest'),
+    path('booked_tours_detail/<int:order_id>', views.booked_tours_detail, name = 'booked_tours_detail')
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

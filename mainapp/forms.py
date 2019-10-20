@@ -17,7 +17,6 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'dob': DateInput(),
             'description': forms.Textarea(attrs={'placeholder': 'Write some thing about you'})
-
         }
 
 

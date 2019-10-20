@@ -8,3 +8,28 @@
 
 
 
+=======booked tours===============
+{% for order in cart_obj %}
+    {% if order.sell_status is True %}
+        <br>
+        <a  href="/booked_tours_detail/{{order.id}}"> 
+        order-id=> {{order.id}} | {{order.tour.title}}
+        </a>
+    {% endif %}
+{% endfor %}
+
+<br>
+
+===========tour in cart ===========
+
+{% for order in cart_obj %}
+    {% if order.sell_status is False %}
+    <a  href="/checkout/{{order.id}}"> 
+    <br>
+    order-id=> {{order.id}} {{order.tour.title}}
+    </a>
+    {% endif %}
+{% endfor %}
+
+
+

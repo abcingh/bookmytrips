@@ -46,9 +46,18 @@ def tour_select(request, name):
 @login_required
 def profile(request):
     username = request.user.username
+    
     user_obj = User.objects.get(username = username)
+    cart_obj = Cart.objects.filter(user__username = username)
+    
+    for i in cart_obj:
+        print(i.id)
+    
+        
+        
     context = {
         "user_obj": user_obj,
+        "cart_obj": cart_obj,
     }
     return render(request, 'profile.html', context)
 
@@ -148,6 +157,22 @@ def handlerequest(request):
     return render(request, 'shop/paymentstatus.html', {'response': response_dict})
 
 
-
-
-
+def booked_tours_detail(request,order_id ):
+    cart_obj = Cart.objects.get(id = order_id)
+    total_cost = (cart_obj.tour.cost)*(cart_obj.head_count)
+    context = {
+        "cart_obj":cart_obj,
+        "total_cost":total_cost 
+    }
+    return render(request, 'booked_tours_detail.html', context)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
