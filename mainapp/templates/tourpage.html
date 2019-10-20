@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ tour.title }}</h5>
                     <p class="card-text">book</p>
-                    <a href="/tour_id/{{tour.id }}" class="btn btn-primary">Book Events</a>
+                    <a href="{% url 'main:select_tour' tour.id %}" class="btn btn-primary">Book Events</a>
                 </div>
             </div>
             {% endfor %}

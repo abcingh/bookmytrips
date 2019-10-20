@@ -16,8 +16,8 @@ from .models import Tour, Cart
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from PayTm import Checksum
+from django.core.mail import send_mail
 MERCHANT_KEY = "xxxxxxxxxx"
-
 
 
 User = get_user_model()
@@ -59,8 +59,6 @@ def profile(request):
     
     for i in cart_obj:
         print(i.id)
-    
-        
         
     context = {
         "user_obj": user_obj,
@@ -94,7 +92,6 @@ def select_tour(request, tour_id):
     return render(request, "add_to_cart.html", context)
     
 def add_to_cart(request, tour_id):
-    print("abhishek")
     if request.method =="POST":
         head_count = request.POST.get("head_count")
         tour_date = request.POST.get("tour_date")
@@ -152,6 +149,32 @@ def handlerequest(request):
     if verify:
         if response_dict['RESPCODE'] == '01':
             print('order successful')
+            
+            # order_id  = response_dict['ORDERID']
+            # cart = Cart.objects.get(id = order_id)
+            # cart.sell_status = True
+            # cart.save()  
+            
+            # cart_obj = Cart.objects.get(id = order_id)
+            # country = cart_obj.tour.country
+            # place = cart_obj.tour.place
+            # duration = cart_obj.tour.tour_duration
+            # title = cart_obj.tour.title
+            # description = cart_obj.tour.description
+            # booking_date = cart_obj.booking_date
+            # tour_date = cart_obj.tour_date
+            
+            # cost = cart_obj.tour.cost
+            # head_count = cart_obj.head_count
+            # total_cost = cost*head_count
+            
+            ####### AFTER SUCCESSFUL ORDERING ======================>
+            # user_obj = request.user
+            # name = user_obj.first_name
+            # email = user_obj.email
+            # send_mail("booking details", "bookin details of user","paul@polo.com", [email])
+            # print(request.user.email)
+            # print(request.user.username)
         else:
             print('order was not successful because' + response_dict['RESPMSG'])
     return render(request, 'shop/paymentstatus.html', {'response': response_dict})

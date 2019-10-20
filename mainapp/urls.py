@@ -4,7 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
 app_name = 'main'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,11 +11,11 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     path('profile', views.profile, name = 'profile'),
     path('profile/update/', views.update_profile, name = 'update'),
-    path('tour_id/<int:tour_id>', views.select_tour, name = 'select_tour'),
-    path('add_to_cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart'),
+    path('tour-id/<int:tour_id>', views.select_tour, name = 'select_tour'),
+    path('add-to-cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart'),
     path('checkout/<int:cart_id>', views.checkout, name = 'checkout'),
     path('handlerequest', views.handlerequest, name = 'handlerequest'),
-    path('booked_tours_detail/<int:order_id>', views.booked_tours_detail, name = 'booked_tours_detail')
+    path('tour-detail/<int:order_id>', views.booked_tours_detail, name = 'booked_tours_detail')
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

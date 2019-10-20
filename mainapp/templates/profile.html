@@ -12,7 +12,7 @@
 {% for order in cart_obj %}
     {% if order.sell_status is True %}
         <br>
-        <a  href="/booked_tours_detail/{{order.id}}"> 
+        <a  href="/tour-detail/{{order.id}}"> 
         order-id=> {{order.id}} | {{order.tour.title}}
         </a>
     {% endif %}

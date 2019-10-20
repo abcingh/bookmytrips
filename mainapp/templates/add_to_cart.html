@@ -6,7 +6,8 @@
 <h3>description ->{{tour.description}}</h3>
 <h3>cost ->{{tour.cost}}</h3>
 
-<form method="post" id="submit_creation" action="/add_to_cart/{{tour.id}}" >
+<form method="post" id="submit_creation" action="/add-to-cart/{{tour.id}}" >
+    <a href="" class="btn btn-primary">Book Events</a>
     {% csrf_token %}
 
     <div class="form-group">
