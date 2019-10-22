@@ -71,30 +71,40 @@ def tour_packages(request, id):
 @login_required
 def profile(request):
     username = request.user.username
+    user_form = UserForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
     user_obj = User.objects.get(username = username)
     context = {
         "user_obj": user_obj,
+        "user_form": user_form,
+        "profile_form": profile_form
     }
-    print(context['user_obj'])
+    if request.method == 'POST':
+        profile_update_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if profile_update_form.is_valid() and profile_form.is_valid():
+            profile_update_form.save()
+            profile_form.save()
+            return render(request, 'profile.html', context)
     return render(request, 'profile.html', context)
 
-@login_required
-def update_profile(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            return HttpResponseRedirect('/profile')
+# @login_required
+# def update_profile(request):
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST, instance=request.user)
+#         profile_form = ProfileForm(request.POST, instance=request.user.profile or None)
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             return HttpResponseRedirect('/profile')
 
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'update_profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+#     else:
+#         user_form = UserForm(instance=request.user)
+#         profile_form = ProfileForm(instance=request.user.profile)
+#     return render(request, 'update_profile.html', {
+#         'user_form': user_form,
+#         'profile_form': profile_form
+#     })
     
 def select_tour(request, tour_id):
     tour = get_object_or_404(Tour, id=tour_id)
@@ -110,9 +120,10 @@ def add_to_cart(request, tour_id):
         tour_date = request.POST.get("tour_date")
         tour = get_object_or_404(Tour, id=tour_id)
         user = request.user
-        cart = Cart.objects.create(head_count = head_count, tour_date = tour_date, user=request.user, tour = tour)
+        cart = Cart.objects.create(head_count=head_count, tour_date=tour_date, user=user, tour=tour)
         cart.save()  
         messages.success(request,'Items added to cart')
+        print(tour_date)
         return redirect("/checkout/"+str(cart.id))
         # return redirect("/tour_id/"+str(tour_id))
 
@@ -128,22 +139,19 @@ def checkout(request, cart_id):
     total_cost = cost*head_count
     context = {
         "cart":cart,
-        "total_cost": total_cost
+        "total_cost": total_cost,
     }
     if request.method=="POST":
-        
         #request the PAYTM to transfer the amount after payment of user
         param_dict = {
-
-                    'MID': 'xyxyxyxyx',
-                    'ORDER_ID': str(cart.id),
-                    'TXN_AMOUNT': str(total_cost),
-                    'CUST_ID': request.user.email,
-                    'INDUSTRY_TYPE_ID': 'Retail',
-                    'WEBSITE': 'DEFAULT',
-                    'CHANNEL_ID': 'WEB',
-                    'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
-
+            'MID': 'xyxyxyxyx',
+            'ORDER_ID': str(cart.id),
+            'TXN_AMOUNT': str(total_cost),
+            'CUST_ID': request.user.email,
+            'INDUSTRY_TYPE_ID': 'Retail',
+            'WEBSITE': 'DEFAULT',
+            'CHANNEL_ID': 'WEB',
+            'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
         }
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
         return render(request, 'paytm.html', {'param_dict': param_dict})

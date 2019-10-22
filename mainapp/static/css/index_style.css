@@ -49,7 +49,7 @@ background-size: 100% 100%;
 
 .search-container, .tour-container{
     padding-top: 115px; 
-    padding-bottom: 116px;
+    /* padding-bottom: 116px; */
 }
 
 .search-container-title, .tour-container-title{
@@ -68,6 +68,7 @@ background-size: 100% 100%;
     padding-top: 142px; 
     padding-bottom: 121px;
 }
+
 .search-result-items{
     display: flex; 
     flex-wrap:wrap; 
@@ -85,4 +86,11 @@ background-size: 100% 100%;
     color: #181818; 
     margin-top: 26px;
     text-align: center;
+}
+
+@media only screen and (max-width: 700px) {
+    body {
+
+        background: red;
+    }
 }

@@ -4,13 +4,12 @@ from django.forms import ModelForm
 from datetime import date
 
 User = settings.AUTH_USER_MODEL
-gender_choices = (('male', 'male'),
-                ('female', 'female'))
+gender_choices = (('male', 'male'), ('female', 'female'))
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
     image = models.CharField(max_length=500, null=True, blank=True)
-
+    country_description = models.TextField(null=True, blank=True)
     def __str__(self):
         return f'{self.name}'
 
@@ -22,8 +21,10 @@ class Tour(models.Model):
     tour_duration = models.CharField(max_length=100)
     title = models.TextField()
     image = models.CharField(max_length=500, null=True, blank=True)
-    description = models.TextField()
-    cost = models.IntegerField()
+    description = models.TextField(null=True, blank=True)
+    cost = models.IntegerField(null=True, blank=True)
+    amenities = models.TextField(null=True, blank=True)
+    reasons_to_choose = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.country} {self.place}'

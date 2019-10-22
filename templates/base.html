@@ -14,20 +14,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>{% block head_title %}{% endblock %}</title>
-    <link rel = "stylesheet" type ="text/css" href= "{% static 'css/login.css'%}"
+    <link rel = "stylesheet" type ="text/css" href= "{% static 'css/login.css'%}">
     {% block extra_head %}
     {% endblock %}
 
     
 </head>
-
 <body>
     {% block body %}
     <div>
             <nav class="navbar navbar-expand-lg navbar-light" style="background: rgba(0, 0, 0, 0.7);">
                     <a class="navbar-brand  text-white " href="{% url 'main:index' %}"><p>BookMyTrips</p></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
-        ``          <span class="navbar-toggler-icon"></span>
+                      <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
                         <ul class="navbar-nav">
