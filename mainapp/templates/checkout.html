@@ -1,0 +1,31 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paytm merchant payment page</title>
+</head>
+<body>
+
+<h3 hidden>{{cart.id}}</h3>
+<h3>Country ->{{cart.tour.country}}</h3>
+<h3>palce -> {{cart.tour.place}}</h3>
+<h3>duration ->{{cart.tour.tour_duration}}</h3>
+<h3>title ->{{acrt.tour.title}}</h3>
+<h3>description ->{{cart.tour.description}}</h3>
+<h3>presons ->{{cart.head_count}}</h3>
+<h3>total cost ->{{total_cost}}</h3>
+
+
+
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="hidden"  value="{{cart.id}}">
+    <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Proceed to payemnt</button></p>
+</form>
+</body>
+</html>
+
+
+

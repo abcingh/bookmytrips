@@ -1,15 +1,13 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-
 <div style="background: black;">
-    <div class="card-header" style="width:100%; height: 80px; background: black;"></div>
-    <div class="row" style="width:100%; background: black;">
+    <div class="card-header" style="height: 80px; background: black;"></div>
+    <div class="row" style="width: 100%; background: black;">
         <div class="col-sm-3">
             <div class="card" style="border-color: black">
                 <div class="card-body" style="background: black">
-                    <p><a href="#" style="font-size:2rem; color: white">BookMyTrips</a></p>
-                    <!-- <img height=50px width=170px src="" alt="Bookmytrips"> -->
+                    <p><a href="{% url 'main:index' %}" style="font-size:2rem; color: white">BookMyTrips</a></p>
                 </div>
             </div>
         </div>
@@ -40,7 +38,7 @@
                 <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
                     <p>USEFUL LINKS</p>
                     <p><a href="#" style="color: white">Help</a></p>
-                    <p><a href="#" style="color: white">Tour Plans</a></p>
+                    <p><a href="#" style="color: white">Tours</a></p>
                     <p><a href="#" style="color: white">Free Mobile App</a></p>
                 </div>
             </div>
@@ -69,4 +67,6 @@
         </div>
     </div>
 </div>
+
+
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>

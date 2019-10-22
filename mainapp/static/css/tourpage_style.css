@@ -1,0 +1,95 @@
+
+.header{
+    background-image: url(https://images.thrillophilia.com/image/upload/s--ObkuxRbk--/dpr_1.0,w_1400/v1/custom_images/photos/000/000/001/original/1508821587_2017-08-02-19-23-01-625_1501681981625_XXXPD1030X_Acknowledgement.jpeg.jpeg?1508821587);
+    height:600px;
+    width:100%; 
+    background-size: 100% 100%;
+}
+    
+.header-content{
+    display: flex; 
+    justify-content:center; 
+    align-items:center; 
+    height:100%; 
+    flex-direction:column; 
+    color:white
+}
+
+.intro-container{
+    width: 100%; 
+    border-bottom: solid 2px #e4e6e8; 
+    padding-top: 142px; 
+    padding-bottom: 121px; 
+}
+
+.intro-container-body{
+    display: flex; 
+    flex-wrap: wrap; 
+    width:90%; 
+    margin:auto; 
+    justify-content:space-between;
+}
+
+.intro-container-element{
+    display:flex; 
+    width:25%;
+}
+
+.intro-container-image{
+    height: 60px;
+}
+
+.intro-container-text{
+    padding-left: 24px;
+}
+
+.intro-container-subtext{
+    font-size: 14px;
+}
+.search-container, .tour-container{
+    padding-top: 115px; 
+    padding-bottom: 116px;
+}
+
+.search-container-title, .tour-container-title{
+    text-align: center;
+    font-size: 12px; 
+    font-weight: 400; 
+    color: #72728c; 
+    line-height: .75; 
+    text-transform: uppercase; 
+    letter-spacing: .2em;
+}
+
+.search-container-items{
+    width: 90%;
+    margin:auto; 
+    padding-top: 142px; 
+}
+
+.tour-container-items{
+    width: 90%;
+    margin:auto; 
+    padding-top: 142px; 
+    padding-bottom: 121px;
+}
+
+.search-result-items{
+    display: flex; 
+    flex-wrap:wrap; 
+    justify-content:space-around;
+}
+
+.tour-result-items{
+    display: flex; 
+    flex-wrap:wrap; 
+    justify-content:space-between;
+
+}
+
+.tour-container-main-title{
+    color: #181818; 
+    margin-top: 26px;
+    text-align: center;
+    padding-top:20px;
+}
