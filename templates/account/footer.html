@@ -1,71 +1,72 @@
 <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    
-    <div class="card-header" style="height: 80px; background: black;"></div>
-    <div class="row" style=" background: black;">
-        <div class="col-sm-3">
-            <div class="card" style="border-color: black">
-                <div class="card-body" style="background: black">
-                    <p><a href="#" style="font-size:2rem; color: white">BookMyTrips</a></p>
-                    <!-- <img height=50px width=170px src="" alt="Bookmytrips"> -->
+    <div style="background: black;">
+        <div class="card-header" style="height: 80px; background: black;"></div>
+        <div class="row" style="width: 100%; background: black;">
+            <div class="col-sm-3">
+                <div class="card" style="border-color: black">
+                    <div class="card-body" style="background: black">
+                        <p><a href="{% url 'main:index' %}" style="font-size:2rem; color: white">BookMyTrips</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="card" style="border-color: black">
-                <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
-                    <p>COMPANY</p>
-                    <p><a href="#" style="color: white">About</a></p>
-                    <p><a href="#" style="color: white">Jobs</a></p>
-                    <p><a href="#" style="color: white">For the Record</a></p>
+            <div class="col-sm-2">
+                <div class="card" style="border-color: black">
+                    <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
+                        <p>COMPANY</p>
+                        <p><a href="#" style="color: white">About</a></p>
+                        <p><a href="#" style="color: white">Jobs</a></p>
+                        <p><a href="#" style="color: white">For the Record</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="card" style="border-color: black">
-                <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
-                    <p>COMMUNITIES</p>
-                    <p><a href="#" style="color: white">For Tourists</a></p>
-                    <p><a href="#" style="color: white">Developers</a></p>
-                    <p><a href="#" style="color: white">Brands</a></p>
-                    <p><a href="#" style="color: white">Investors</a></p>
-                    <p><a href="#" style="color: white">Vendors</a></p>
+            <div class="col-sm-2">
+                <div class="card" style="border-color: black">
+                    <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
+                        <p>COMMUNITIES</p>
+                        <p><a href="#" style="color: white">For Tourists</a></p>
+                        <p><a href="#" style="color: white">Developers</a></p>
+                        <p><a href="#" style="color: white">Brands</a></p>
+                        <p><a href="#" style="color: white">Investors</a></p>
+                        <p><a href="#" style="color: white">Vendors</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="card" style="border-color: black">
-                <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
-                    <p>USEFUL LINKS</p>
-                    <p><a href="#" style="color: white">Help</a></p>
-                    <p><a href="#" style="color: white">Tour Plans</a></p>
-                    <p><a href="#" style="color: white">Free Mobile App</a></p>
+            <div class="col-sm-2">
+                <div class="card" style="border-color: black">
+                    <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
+                        <p>USEFUL LINKS</p>
+                        <p><a href="#" style="color: white">Help</a></p>
+                        <p><a href="#" style="color: white">Tours</a></p>
+                        <p><a href="#" style="color: white">Free Mobile App</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card" style="border-color: black">
-                <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
-                    <a href="" style="padding-right: 15px;"><i class='fab fa-instagram' style='font-size:48px;color:white'></i></a>
-                    <a href="" style="padding-right: 15px;"><i class='fab fa-facebook' style='font-size:48px;color:white;'></i></a>
-                    <a href="" style="padding-right: 15px;"><i class='fab fa-twitter' style='font-size:48px;color:white'></i></a>
+            <div class="col-sm-3">
+                <div class="card" style="border-color: black">
+                    <div class="card-body" style="background: black; color:white; font-size: 15px; font-family:Arial;">
+                        <a href="" style="padding-right: 15px;"><i class='fab fa-instagram' style='font-size:48px;color:white'></i></a>
+                        <a href="" style="padding-right: 15px;"><i class='fab fa-facebook' style='font-size:48px;color:white;'></i></a>
+                        <a href="" style="padding-right: 15px;"><i class='fab fa-twitter' style='font-size:48px;color:white'></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="card" style="border-color: black; height:100px; font-size:10px; color:white;">
-                <div class="card-body" style="background: black;">
-                    <ul style="display: flex; justify-content:space-around; list-style:none;">
-                        <li>Legal</li>
-                        <li>Privacy Center</li>
-                        <li>Privacy Policy</li>
-                        <li>Cookies</li>
-                        <li>About Ads</li>
-                    </ul>
+            <div class="col-sm-5">
+                <div class="card" style="border-color: black; height:100px; font-size:10px; color:white;">
+                    <div class="card-body" style="background: black;">
+                        <ul style="display: flex; justify-content:space-around; list-style:none;">
+                            <li>Legal</li>
+                            <li>Privacy Center</li>
+                            <li>Privacy Policy</li>
+                            <li>Cookies</li>
+                            <li>About Ads</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
     
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>

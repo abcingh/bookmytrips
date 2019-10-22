@@ -1,23 +1,120 @@
-<h3 hidden>{{tour.id}}</h3>
-<h3>Country ->{{tour.country}}</h3>
-<h3>palce -> {{tour.place}}</h3>
-<h3>duration ->{{tour.tour_duration}}</h3>
-<h3>title ->{{tour.title}}</h3>
-<h3>description ->{{tour.description}}</h3>
-<h3>cost ->{{tour.cost}}</h3>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/add_to_cart_style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-<form method="post" id="submit_creation" action="/add-to-cart/{{tour.id}}" >
-    <a href="" class="btn btn-primary">Book Events</a>
-    {% csrf_token %}
-
-    <div class="form-group">
-    <label for="head_count"> No. of person </label>
-    <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <title>{{ tour.place }}</title>
+</head>
+<body>
+    <div class='header'>
+        {% include 'header.html' %}
     </div>
-
-    <div class="form-group">
-    <label for="tour_date">tour date</label>
-    <input type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="tour_date" required>
+    <!-- {% if message %}
+        {% for m in messages %}
+        {{ m }}
+        {% endfor %}
+    {% endif %} -->
+    <div class="container">
+        <div class="intro-container">
+            <div class="intro-container-image">
+                <img src="{{ tour.image }}" class="card" alt="">
+            </div>
+            <div class="card" style="width:40%;">
+                <div class="card-header">
+                    <h2 >  
+                        {{ tour.title }}, {{ tour.country.name }}
+                    </h1>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="color:rgba(59,68,78,0.7);">
+                        <i class="fa fa-clock-o"></i>
+                        {{ tour.tour_duration }}
+                    </li>
+                    <li class="list-group-item" style="color:rgba(59,68,78,0.7);">
+                            <i class="fa fa-map-marker"></i>
+                            {{ tour.place }}, {{ tour.country.name }}   
+                    </li>
+                    <li class="list-group-item">
+                        <p>&#10003; Hassle-free and Convenient Transfers</p>
+                        <p>&#10003; Comfortable car & professional driver</p>
+                        <p>&#10003; Avoid the Hassles of Public Transport</p>
+                        <p>&#10003; Flexible Timings as per Guests' Preference</p>
+                    </li>
+                    <li class="list-group-item" style="color:#007bff; ">
+                        ₹ <b style="font-size: 2rem;">{{ tour.cost }}</b> per adult 
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="main-description-container">
+                <p>
+                    {{tour.description}}
+                </p>
+            </div>
+            <div class="main-billing-container">
+                <form method="post" id="submit_creation" action="/add-to-cart/{{tour.id}}" >
+                    {% csrf_token %}
+                
+                    <div class="form-group">
+                        <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
+                    </div>
+                    <div class="form-group">
+                        <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
+                        </div>
+                    <p class="text-center"><button type="submit" class="btn btn-primary">Add to cart</button></p>
+                    <p class="text-center"><button type="submit" class="btn btn-primary">Checkout</button></p>
+                </form>
+                <div class="why-bookmytrip-container">
+                    <div class="why-bmt-head">
+                        Why BookMyTrips
+                    </div>
+                    <div class="why-bmt-body">
+                        <p>
+                            <b> Verified Reviews </b> <br>
+                            25000+ Pictures and Reviews on the platform.
+                        </p>
+                    </div>
+                    <div class="why-bmt-body">
+                        <p>
+                            <b> Best Price Guarantee </b> <br>
+                            We have a best price guarantee. If you get the same product anywhere else at a cheaper price and you inform us about the same on the same day of your booking, we will refund the difference of cost to you.
+                            </p>
+                    </div>
+                    <div class="why-bmt-body">
+                        <p>  
+                            <b> 10000+ Tours and Activities </b> <br>
+                            We have activities across 17 countries, across every category so that you never miss best things to do anywhere.
+                        </p>
+                    </div>
+                    <div class="why-bmt-body">
+                        <p>
+                            <b> Customer Delight </b> <br>
+                            We are always able to support you so that you have a hassle free experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <p class="text-center"><button type="submit" class="btn btn-outline-info">Add to cart</button></p>
-</form>
+    {% include 'footer.html' %}
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                    format:'yyyy-mm-dd',
+            });
+        });
+    </script>
+</body>
+</html>

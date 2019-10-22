@@ -1,0 +1,31 @@
+{% for order in cart_obj %}
+    {% if order.sell_status is False %}
+    <br><br><br> <br><br>
+    <div>
+        order-id=>  {{order.id}} 
+                    {{order.tour.title}} 
+                    {{order.head_count}}
+
+            <form action=""  method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="cart_id" value="{{order.id}}">
+                <input type="hidden" name="cart_title" value="{{order.tour.title}}">
+                <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Proceed to payemnt</button></p>
+            </form>
+
+        <br>
+        <form method="POST" action="/cart-items/" >
+            {% csrf_token %}
+            <input type="hidden" id="cart_id" name="cart_id" value="{{order.id}}">
+
+            <div class="form-group">
+                <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
+            </div>
+            <div class="form-group">
+                <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
+                </div>
+            <p class="text-center"><button type="submit" class="btn btn-primary">update</button></p>
+        </form>
+    </div>
+    {% endif %}
+{% endfor %}

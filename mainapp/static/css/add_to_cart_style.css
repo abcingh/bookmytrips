@@ -1,0 +1,60 @@
+.navbar{
+    background: rgba(1,1,1, 0.7);
+}
+
+.container{
+    width: 80%;
+}
+
+.intro-container{
+    display: flex;
+    height: 500px;
+}
+
+.intro-container-image{
+    width: 60%;
+}
+
+.intro-container-image  img{
+    height: 500px;
+    width: 100%;
+}
+
+.main-container{
+    display: flex;
+    padding-top: 50px;
+    width: 100%;
+    padding-bottom: 100px;
+}
+
+.main-description-container {
+    width: 70%;
+}
+
+.main-description-container p{
+    width: 80%;
+    text-align: justify;
+}
+
+.main-billing-container{
+    width: 30%;
+}
+
+.why-bookmytrip-container{
+    border: 1px solid #007bff;
+}
+
+.why-bmt-head{
+    background:  #007bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin: auto;
+}
+
+.why-bmt-body{
+    margin: 5% 15%;
+    text-align: justify;
+    font-size: 14px;
+}

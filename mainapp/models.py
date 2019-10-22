@@ -16,13 +16,21 @@ def user_directory_path(instance, filename):
 
 DEFAULT = 'profile_image/default/default.png'
 
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Tour(models.Model):
-    country = models.CharField(max_length=100)
+    # country = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     place = models.CharField(max_length=100)
-    tour_duration = models.IntegerField()
+    tour_duration = models.CharField(max_length=100)
     title = models.TextField()
-    image = models.CharField(max_length=100, null=True, blank=True)
+    image = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField()
     cost = models.IntegerField()
 
@@ -49,8 +57,6 @@ class Cart(models.Model):
     booking_date = models.DateField(("Date"), default=date.today)
     sell_status = models.BooleanField(default=False)
     
-    
-
 
 # import datetime
 

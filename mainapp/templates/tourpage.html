@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,26 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>{{country}} - Tourism</title>
+    <link rel="stylesheet" href="{% static 'css/tourpage_style.css' %}">
 </head>
 <body>
     <div>
-        <div  style="background-image: url(https://d3u4hzlr7ozpoo.cloudfront.net/assets/banner-image-tours-ef50aa6ecfaf707fcc3ac0b73f418209.jpg); height:600px; width:100%; background-size: 100% 100%;">
+        <div class="header">
             {% include 'header.html' %}
-            <div style="display: flex; justify-content:center; height:100%; flex-direction:column;">
+            <div class="header-content">
                 <div style="width: 50%;">
-                    <div style="padding-left:20px;">
+                    <div style=" text-align:center;">
                         <h2>BookMytTrip Tours</h1>
                         <h4>Experimantal Journeys will make you a storyteller</h3>
                     </div>
-                    <div style="padding-left:20px;">
+                    <div>
                         <form action="" method="POST">
                             {% csrf_token %} {{ form }}
-                            <button class="btn btn-primary" type="submit">Go</button>
+                            <button class="btn btn-primary"  type="submit">Go</button>
                         </form>
                     </div>
                 </div>
             </div>
-    
         </div>
         <h3 style="margin:90px;">BookMyTrip Recommendations for {{country}}</h3>
         <div style="display: flex; justify-content:space-between; margin:90px;"> 
@@ -38,9 +39,104 @@
                 </div>
             </div>
             {% endfor %}
+        <div class="intro-container">
+            <div class="intro-container-body">
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/beach.svg" alt="">
+                    </div>
+                    <div class="intro-container-text">
+                        <p>
+                            Top Destinations 
+                        </p>
+                        <p class="into-container-subtext">
+                            10,000+ Travel Experiences in 25+ Countries
+                        </p>
+                    </div>
+                </div>
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/wallet.svg" alt="">
+                    </div>
+                    <div  class="intro-container-text">
+                        <p>
+                            The Best Prices 
+                        </p>
+                        <p class="into-container-subtext">
+                            Instant book with suppliers in real time
+                        </p>
+                    </div>
+                </div>
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/suitcase.svg" alt="">
+                    </div>
+                    <div class="intro-container-text">
+                        <p>
+                            Amazing Services 
+                        </p>
+                        <p class="into-container-subtext">
+                            With 98.7 CSAT we always exceed your expectations.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+        {% if search %}
+        <div class="search-container">
+            <div class="search-container-title">
+                <div>
+                    search result(s)
+                </div>
+            </div>
+            <!-- ----------------------------------------------------------------------------------- -->
+            <div class="search-container-items">
+                <div class="search-result-items">
+                    {% for s in search %}
+                    <div class="card" style="width:33%;">
+                        <img src="{{ s.image }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ s.title }}</h5>
+                            <p class="card-text">{{ s.cost }} <br>
+                                <a href="/tour_id/{{s.id }}" class="btn btn-primary">Book Event</a>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- ----------------------------------------------------------------------------------- -->
+        </div> 
     </div>
- 
+    {% endif %}
+    <div class="tour-container">
+        <div>
+            <div class="tour-container-main-title">
+                <h2>BookMyTrip Recommendations for {{country}}</h2>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------------------- -->
+        <div class="tour-container-items">
+            <div class="tour-result-items">
+                {% for tour in tours %}
+                <div class="card" style="width:33%;">
+                    <img src="{{ tour.image }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tour.title }}</h5>
+                        <p class="card-text">{{ tour.cost }} <br>
+                            <a href="/tour_id/{{tour.id }}" class="btn btn-primary">Book Event</a>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------------------- -->
+    </div>
+    <div class="advertise-container">
+        <div></div>
+        <div></div>
+    </div> 
 </body>
 </html>
 

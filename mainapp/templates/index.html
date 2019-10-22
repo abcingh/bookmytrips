@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -6,63 +7,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Holiday Lets, Homes, Experiences &amp; Places - BookMyTrips</title>
+    <link rel="stylesheet" href="{% static 'css/index_style.css' %}">
 </head>
 
 <body>
     <div>
-        <div style="background-image: url(https://a0.muscache.com/4ea/air/r:w1550-h1037-sfit,e:fjpg-c80/pictures/0ffd8594-f123-43f0-85bb-7ef88c6f0624.jpg); height:600px; width:100%; background-size: 100% 100%;">
+        <div class="header">
             {% include 'header.html' %}
-            <div style="display: flex; justify-content:center; align-items:center; height:100%; flex-direction:column; color:white">
+            <div class="header-content">
                 <div style="width: 50%;">
-                    <div style=" text-align:center;">
+                    <div style="text-align:center;">
                         <h1>10,000+ Travel Experiences in 25+ Countries</h1>
                         <h3>BE THERE, DO THAT!</h3>
                     </div>
                     <div>
                         <form action="" method="POST">
                             {% csrf_token %} {{ form }}
-                            <button class="btn btn-primary" type="submit">Go</button>
+                            <button class="btn btn-primary"  type="submit">Go</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div style="padding-top: 30px;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <b>At BookMYTrips You'll Get:</b>
+        <div class="intro-container">
+            <div class="intro-container-body">
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/beach.svg" alt="">
                     </div>
-                    <div class="col-sm">
-                        <p><b>Wide Range:</b></p>
-                        <p style="font-size:13px;"> 10,000+ Travel Experiences in 25+ Countries</p>
+                    <div class="intro-container-text">
+                        <p>
+                            Top Destinations 
+                        </p>
+                        <p class="into-container-subtext">
+                            10,000+ Travel Experiences in 25+ Countries
+                        </p>
                     </div>
-                    <div class="col-sm">
-                        <p> <b>Easy Booking:</b> </p>
-                        <p style="font-size:13px;"> Instant book with suppliers in real time</p>
+                </div>
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/wallet.svg" alt="">
                     </div>
-                    <div class="col-sm">
-                        <p> <b>Customer Experience:</b></p>
-                        <p style="font-size:13px;"> With 98.7 CSAT we always exceed your expectations.</p>
+                    <div  class="intro-container-text">
+                        <p>
+                            The Best Prices 
+                        </p>
+                        <p class="into-container-subtext">
+                            Instant book with suppliers in real time
+                        </p>
+                    </div>
+                </div>
+                <div class="intro-container-element">
+                    <div>
+                        <img class="intro-container-image" src="https://colorlib.com/preview/theme/travello/images/suitcase.svg" alt="">
+                    </div>
+                    <div class="intro-container-text">
+                        <p>
+                            Amazing Services 
+                        </p>
+                        <p class="into-container-subtext">
+                            With 98.7 CSAT we always exceed your expectations.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <h2 style="text-align: center; padding-top:20px;">Curated Travel Experiences Across The Globe</h2>
-    <div style="display: flex; justify-content:space-around; margin:50px;">
-        {% for country in countries %}
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{ country }}</h5>
-                <p class="card-text">book</p>
-                <a href="{% url 'main:tourselect' country %}" class="btn btn-primary">Explore</a>
+    {% if search %}
+        <div class="search-container">
+            <div class="search-container-title">
+                <div>
+                    search result(s)
+                </div>
+            </div>
+            <!-- ----------------------------------------------------------------------------------- -->
+            <div class="search-container-items">
+                <div class="search-result-items">
+                    {% for s in search %}
+                    <div class="card" style="width:33%;">
+                        <img src="{{ s.image }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ s.title }}</h5>
+                            <p class="card-text">{{ s.cost }} <br>
+                                <a href="/tour_id/{{s.id }}" class="btn btn-primary">Book Event</a>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- ----------------------------------------------------------------------------------- -->
+            </div> 
+        </div>
+    {% endif %}
+    <div class="tour-container">
+        <div>
+            <div class="tour-container-title">
+                simply amazing places
+            </div>
+            <div class="tour-container-main-title">
+                <h2>Curated Travel Experiences Across The Globe</h2>
             </div>
         </div>
-        {% endfor %}
+        <!-- ----------------------------------------------------------------------------------- -->
+        <div class="tour-container-items">
+            <div class="tour-result-items">
+                {% for country in countries %}
+                {% if country.name != 'India' %}
+                <div class="card" style="width:33%;">
+                    <img src="{{ country.image }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ country.name }}</h5>
+                        <!-- <p class="card-text">{{country}} <br> -->
+                            <a href="{% url 'main:tourselect' country.id %}" class="btn btn-primary">Explore</a>
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------------------- -->
+        </div> 
     </div>
-    <h2 style="text-align: center; padding-top:20px;">Popular Tours </h2>
+
+    <div class="tour-container">
+        <div>
+            <div class="tour-container-main-title">
+                <h2 style="text-align: center; padding-top:20px;">Popular Tours </h2>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------------------- -->
+        <div class="tour-container-items">
+            <div class="tour-result-items">
+                {% for tour in popular_tours %}
+                <div class="card" style="width:33%;">
+                    <img src="{{ tour.image }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tour.title }}</h5>
+                        <p class="card-text">{{ tour.cost }} <br>
+                            <a href="/tour_id/{{tour.id }}" class="btn btn-primary">Book Event</a>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------------------- -->
+        </div> 
+    </div>
 
     {% include 'footer.html' %}
 
