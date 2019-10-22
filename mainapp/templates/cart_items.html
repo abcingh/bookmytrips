@@ -2,9 +2,10 @@
     {% if order.sell_status is False %}
     <br><br><br> <br><br>
     <div>
-        order-id=>  {{order.id}} 
-                    {{order.tour.title}} 
-                    {{order.head_count}}
+        order-id=>  {{order.id}} <br>
+         title =>   {{order.tour.title}} <br>
+         people =>  {{order.head_count}} <br>
+         per person cost => {{order.tour.cost}}
 
             <form action=""  method="POST">
                 {% csrf_token %}
@@ -28,4 +29,5 @@
         </form>
     </div>
     {% endif %}
+    <hr>
 {% endfor %}

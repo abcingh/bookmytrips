@@ -14,7 +14,7 @@ urlpatterns = [
     path('tour-id/<int:tour_id>', views.select_tour, name = 'select_tour'),
     path('add-to-cart/<int:tour_id>', views.add_to_cart, name = 'add_to_cart'),
     path('cart-items/', views.cart_items, name = 'cart_items'),
-    path('checkout/<int:cart_id>', views.checkout, name = 'checkout'),
+    # path('checkout/<int:cart_id>', views.checkout, name = 'checkout'),
     path('handlerequest', views.handlerequest, name = 'handlerequest'),
     path('tour-detail/<int:order_id>', views.booked_tours_detail, name = 'booked_tours_detail')
 

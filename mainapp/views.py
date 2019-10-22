@@ -17,11 +17,12 @@ from django.views.decorators.csrf import csrf_exempt
 from PayTm import Checksum
 from django.core.mail import send_mail
 
-MERCHANT_KEY = "xxxxxxxxxx"
+
+Test_Merchant_ID = config('Test_Merchant_ID')
+Test_Merchant_Key = config('Test_Merchant_Key')
 User = get_user_model()
 ELASTIC_URL = config('ELASTICSEARCH_URL')
 es = Elasticsearch(ELASTIC_URL)
-
 
 
 def error_404_view(request, exception):
@@ -89,26 +90,6 @@ def profile(request):
     }
     return render(request, 'profile.html', context)
 
-# def cart_items(request):
-#     username = request.user.username
-#     cart_obj = Cart.objects.filter(user__username = username)
-#     if request.method =="POST":
-#         head_count = request.POST.get("head_count")
-#         tour_date = request.POST.get("tour_date")
-#         cart_id = request.POST.get("cart_id")
-#         cart = get_object_or_404(Cart, id=cart_id)
-#         cart.tour_date = tour_date
-#         cart.head_count = head_count
-#         cart.save()  
-#         messages.success(request,'Items added to cart')
-       
-#         return redirect("/cart-items/")
-#     context = {
-#         "cart_obj": cart_obj,
-#     }
-#     return render(request, 'cart_items.html', context)
-
-
 
 def cart_items(request):
     username = request.user.username
@@ -135,18 +116,19 @@ def cart_items(request):
             #request the PAYTM to transfer the amount after payment of user
             param_dict = {
 
-                        'MID': 'xyxyxyxyx',
+                        'MID': Test_Merchant_ID,
                         'ORDER_ID': str(cart.id),
                         'TXN_AMOUNT': str(total_cost),
-                        'CUST_ID': request.user.email,
+                        'CUST_ID': str(request.user.id),
                         'INDUSTRY_TYPE_ID': 'Retail',
-                        'WEBSITE': 'DEFAULT',
+                        'WEBSITE': 'WEBSTAGING',
                         'CHANNEL_ID': 'WEB',
-                        'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
-
+                        'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest'
+                        
             }
-            param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
-            return render(request, 'paytm.html', {'param_dict': param_dict})
+            checksum = Checksum.generate_checksum(param_dict, Test_Merchant_Key)
+            
+            return render(request, 'paytm.html', {'param_dict': param_dict, 'checksum':checksum})
         
         cart = get_object_or_404(Cart, id=cart_id)
         cart.tour_date = tour_date
@@ -162,83 +144,6 @@ def cart_items(request):
     return render(request, 'cart_items.html', context)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @login_required
 def update_profile(request):
     if request.method == 'POST':
@@ -248,7 +153,6 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             return HttpResponseRedirect('/profile')
-
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
@@ -280,83 +184,42 @@ def add_to_cart(request, tour_id):
     return render(request, 'add_to_cart.html')
     # return redirect(reverse('checkout'))
 
-@login_required
-def checkout(request, cart_id):
-    cart_id = int(cart_id)
-    cart = get_object_or_404(Cart, id = cart_id)
-    cost = cart.tour.cost
-    head_count = cart.head_count
-    total_cost = cost*head_count
-    context = {
-        "cart":cart,
-        "total_cost": total_cost
-    }
-    if request.method=="POST":
-        
-        #request the PAYTM to transfer the amount after payment of user
-        param_dict = {
-
-                    'MID': 'xyxyxyxyx',
-                    'ORDER_ID': str(cart.id),
-                    'TXN_AMOUNT': str(total_cost),
-                    'CUST_ID': request.user.email,
-                    'INDUSTRY_TYPE_ID': 'Retail',
-                    'WEBSITE': 'DEFAULT',
-                    'CHANNEL_ID': 'WEB',
-                    'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
-
-        }
-        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
-        return render(request, 'paytm.html', {'param_dict': param_dict})
-    return render(request, 'checkout.html', context)
-
-
-#handles the paytm post request
 @csrf_exempt
 def handlerequest(request):
-    # paytm will send you post request here
+    Test_Merchant_Key = config('Test_Merchant_Key')
     form = request.POST
     response_dict = {}
     for i in form.keys():
         response_dict[i] = form[i]
         if i == 'CHECKSUMHASH':
             checksum = form[i]
-
-    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
+    verify = Checksum.verify_checksum(response_dict, Test_Merchant_Key, checksum)
+    
     if verify:
         if response_dict['RESPCODE'] == '01':
-            print('order successful')
+            order_id  = response_dict['ORDERID']
+            cart = Cart.objects.get(id = order_id)
+            cart.sell_status = True
+            cart.save()  
             
-            # order_id  = response_dict['ORDERID']
-            # cart = Cart.objects.get(id = order_id)
-            # cart.sell_status = True
-            # cart.save()  
-            
-            # cart_obj = Cart.objects.get(id = order_id)
-            # country = cart_obj.tour.country
-            # place = cart_obj.tour.place
-            # duration = cart_obj.tour.tour_duration
-            # title = cart_obj.tour.title
-            # description = cart_obj.tour.description
-            # booking_date = cart_obj.booking_date
-            # tour_date = cart_obj.tour_date
-            
-            # cost = cart_obj.tour.cost
-            # head_count = cart_obj.head_count
-            # total_cost = cost*head_count
-            
-            ####### AFTER SUCCESSFUL ORDERING ======================>
             # user_obj = request.user
             # name = user_obj.first_name
             # email = user_obj.email
-            # send_mail("booking details", "bookin details of user","paul@polo.com", [email])
+            
+            # booking_detali = str(name)+"\n"+"order id" +str(order_id)+"\n" +"no of person" + str(cart.head_count)+ "tour date"+ str(cart.tour_date) + "tour"+ str(tour+ cart.tour.place)
+            
+            # send_mail("booking details", booking_detali,"paul@polo.com", [email])
+            
             # print(request.user.email)
             # print(request.user.username)
+            
+            print("ok")
         else:
+            print("not ok")
             print('order was not successful because' + response_dict['RESPMSG'])
-    return render(request, 'shop/paymentstatus.html', {'response': response_dict})
+    return render(request, 'paymentstatus.html', {'response': response_dict})
 
-
+    
 def booked_tours_detail(request,order_id ):
     cart_obj = get_object_or_404(Cart, id=order_id)
     total_cost = (cart_obj.tour.cost)*(cart_obj.head_count)
@@ -365,4 +228,3 @@ def booked_tours_detail(request,order_id ):
         "total_cost":total_cost 
     }
     return render(request, 'booked_tours_detail.html', context)
-    
