@@ -57,6 +57,13 @@ class Cart(models.Model):
     tour_date = models.DateField()
     booking_date = models.DateField(("Date"), default=date.today)
     sell_status = models.BooleanField(default=False)
+    total_cost = models.IntegerField(default=0)
+
+    @property
+    def total_amount(self):
+        self.total_cost = self.head_count * self.tour.cost
+        return self.total_cost
+
     
 
 # import datetime

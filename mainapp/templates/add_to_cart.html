@@ -59,8 +59,11 @@
         <div class="main-container">
             <div class="main-description-container">
                 <p>
-                    {{tour.description}}
+                    <span id="dots">Tour Description</span><span id="more">
+                    {{tour.description}}</span>
+
                 </p>
+                <button onclick="myFunction()" class="btn btn-success" id="myBtn">Read more</button>
             </div>
             <div class="main-billing-container">
                 <form method="post" id="submit_creation" action="/add-to-cart/{{tour.id}}" >
@@ -72,7 +75,6 @@
                         <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
                         </div>
                     <p class="text-center"><button type="submit" class="btn btn-primary">Add to cart</button></p>
-                    <p class="text-center"><button type="submit" class="btn btn-primary">Checkout</button></p>
                 </form>
                 <div class="why-bookmytrip-container">
                     <div class="why-bmt-head">
@@ -114,6 +116,23 @@
                     format:'yyyy-mm-dd',
             });
         });
+    </script>
+    <script>
+        function myFunction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+        
+            if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Read more"; 
+            moreText.style.display = "none";
+            } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Read less"; 
+            moreText.style.display = "inline";
+            }
+        }
     </script>
 </body>
 </html>

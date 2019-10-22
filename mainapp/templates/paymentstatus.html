@@ -1,20 +1,54 @@
-{% block body %}
-<div class="container">
-    {{response}}
-    <div class="col my-4">
-
-        <h2>Payment status regarding your order Id {{response.ORDERID}}</h2>
-        {% if response.RESPCODE == '01' %}
-        ORDER SUCCESS
-        {% else %}
-        ORDER FAILURE
-        {% endif%}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>PayTm payment merchant</title>
+</head>
+<body>
+    <div style="padding: 50px;">
+        <h1>
+            Payment status regarding your order Id {{response.ORDERID}}
+        </h1>
     </div>
-
-</div>
-{% endblock %}
-{% block js %}
-<script>
-</script>
-{% endblock %}
+    <div class="container" style="color: black;">
+        <table class="table table-hover table-dark">
+            <tbody>
+                <tr class="bg-info">
+                    <td>ORDER ID</td>
+                    <td>{{response.ORDERID}}</td>
+                </tr>
+                <tr class="bg-info">
+                    <td>MID</td>
+                    <td>{{response.ORDERID}}</td>
+                </tr>
+                <tr class="bg-info">
+                    <td>Transection Amount</td>
+                    <td>{{response.TXNAMOUNT}}</td>
+                </tr>
+                {% if response.RESPCODE == '01' %}
+                <tr class="bg-info">
+                    <td>Transection Status</td>
+                    <td>Transection Successful</td>
+                </tr>
+                {% else %}
+                <tr class="table-danger">
+                    <td>Transection Status</td>
+                    <td>Transection Failed</td>
+                </tr>
+                {% endif %}
+                <tr class="bg-info">
+                    <td>Message</td>
+                    <td>{{response.RESPMSG}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="display: flex; justify-content:center;">
+        <a style="border: 1px solid black" href="{% url 'main:index' %}">Go Home</a>
+    </div>
+</body>
+</html>

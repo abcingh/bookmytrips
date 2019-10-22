@@ -58,3 +58,7 @@
     text-align: justify;
     font-size: 14px;
 }
+
+#more{
+    display: none;
+}

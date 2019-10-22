@@ -1,33 +1,104 @@
-{% for order in cart_obj %}
-    {% if order.sell_status is False %}
-    <br><br><br> <br><br>
-    <div>
-        order-id=>  {{order.id}} <br>
-         title =>   {{order.tour.title}} <br>
-         people =>  {{order.head_count}} <br>
-         per person cost => {{order.tour.cost}}
-
-            <form action=""  method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="cart_id" value="{{order.id}}">
-                <input type="hidden" name="cart_title" value="{{order.tour.title}}">
-                <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Proceed to payemnt</button></p>
-            </form>
-
-        <br>
-        <form method="POST" action="/cart-items/" >
-            {% csrf_token %}
-            <input type="hidden" id="cart_id" name="cart_id" value="{{order.id}}">
-
-            <div class="form-group">
-                <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
-            </div>
-            <div class="form-group">
-                <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
-                </div>
-            <p class="text-center"><button type="submit" class="btn btn-primary">update</button></p>
-        </form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/checkoutstyle.css' %}">
+    <title>CART Items</title>
+</head>
+<body>
+    <div class='header'>
+        {% include 'header.html' %}
     </div>
-    {% endif %}
-    <hr>
-{% endfor %}
+    <div class="status-container">
+                
+    </div>
+    <div class="container">
+        <div class="cart">
+            {% for order in cart_obj %}
+            {% if order.sell_status is False %}
+                <div style="padding-bottom: 50px; display:flex;">
+                    <div class="modification-form">
+                        <form method="POST" action="/cart-items/" >
+                            {% csrf_token %}
+                            <input type="hidden" id="cart_id" name="cart_id" value="{{order.id}}">
+                
+                            <div class="form-group">
+                                <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
+                                </div>
+                            <p class="text-center"><button type="submit" class="btn btn-primary">update</button></p>
+                        </form>
+                    </div>
+                    <div class="cart-item-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 >  
+                                    {{order.tour.title}}, {{ order.tour.country.name }}
+                                    <!-- {{ cart.tour.title }}, {{ cart.tour.country.name }} -->
+                                </h1>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" style="color:rgba(59,68,78,0.7);">
+                                    <i class="fa fa-clock-o"></i>
+                                        {{ order.tour.tour_duration }}
+                                    <!-- {{ cart.tour.tour_duration }} -->
+                                    <br>
+                                    <i class="fa fa-map-marker"></i>
+                                        {{ order.tour.place }}, {{ order.tour.country.name }}
+                                    <!-- {{ cart.tour.place }}, {{ cart.tour.country.name }} -->
+                                </li>
+                                <li class="list-group-item">
+                                    <b>SUB VARIENTS</b>
+                                </li>
+                                
+                                <li class="list-group-item">
+                                    <div class="cost-breakdown">
+                                        <p>{{ order.tour.title }}</p>
+                                        <p> Price Breakdown</p>
+                                        <p> Package Cost ₹{{ order.tour.cost }} </p>
+                                    </div>
+                                    <div class="cost-breakdown">
+                                        <p>Per Adult</p>
+                                        <p>{{ order.head_count }} X ₹{{ order.tour.cost }} </p>
+                                        <p>Total <b style="color:#007bff; font-size:1.5rem; "> ₹ {{ order.total_amount }} </b></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <form action=""  method="POST"> 
+                                        {% csrf_token %}
+                                        <input type="hidden" name="cart_id" value="{{order.id}}">
+                                        <input type="hidden" name="cart_title" value="{{order.tour.title}}">
+                                        {% if not order.sell_status %}
+                                        <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Proceed to payment</button></p>
+                                        {% endif %}
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                    format:'yyyy-mm-dd',
+            });
+        });
+    </script>
+
+</body>
+</html>

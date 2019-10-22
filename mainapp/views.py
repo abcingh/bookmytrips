@@ -89,11 +89,12 @@ def profile(request):
     context = {
         "user_obj": user_obj,
         "user_form": user_form,
-        "profile_form": profile_form
+        "profile_form": profile_form,
+        "cart_obj": cart_obj
     }
     if request.method == 'POST':
         profile_update_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if profile_update_form.is_valid() and profile_form.is_valid():
             profile_update_form.save()
             profile_form.save()
@@ -131,9 +132,8 @@ def cart_items(request):
         tour_date = request.POST.get("tour_date")
         cart_id = request.POST.get("cart_id")
         cart_title = request.POST.get("cart_title")
-        print('------------------------',cart_id, cart_title)
+        cart = get_object_or_404(Cart, id = cart_id)
         if cart_title != None:
-            print('-------', 'paytm called')
             cart_id = request.POST.get("cart_id")
             cart = get_object_or_404(Cart, id = cart_id)
             cost = cart.tour.cost
@@ -171,6 +171,7 @@ def cart_items(request):
          
     context = {
         "cart_obj": cart_obj,
+
     }
     return render(request, 'cart_items.html', context)
 
@@ -193,38 +194,39 @@ def add_to_cart(request, tour_id):
         cart.save()  
         messages.success(request,'Items added to cart')
         print(tour_date)
-        return redirect("/checkout/"+str(cart.id))
+        return redirect('/cart-items/')
+        # return redirect("/checkout/"+str(cart.id))
         # return redirect("/tour_id/"+str(tour_id))
 
     return render(request, 'add_to_cart.html')
     # return redirect(reverse('checkout'))
 
-@login_required
-def checkout(request, cart_id):
-    cart_id = int(cart_id)
-    cart = Cart.objects.get(id = cart_id)
-    cost = cart.tour.cost
-    head_count = cart.head_count
-    total_cost = cost*head_count
-    context = {
-        "cart":cart,
-        "total_cost": total_cost,
-    }
-    if request.method=="POST":
-        #request the PAYTM to transfer the amount after payment of user
-        param_dict = {
-            'MID': 'xyxyxyxyx',
-            'ORDER_ID': str(cart.id),
-            'TXN_AMOUNT': str(total_cost),
-            'CUST_ID': request.user.email,
-            'INDUSTRY_TYPE_ID': 'Retail',
-            'WEBSITE': 'DEFAULT',
-            'CHANNEL_ID': 'WEB',
-            'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
-        }
-        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
-        return render(request, 'paytm.html', {'param_dict': param_dict})
-    return render(request, 'checkout.html', context)
+# @login_required
+# def checkout(request, cart_id):
+#     cart_id = int(cart_id)
+#     cart = Cart.objects.get(id = cart_id)
+#     cost = cart.tour.cost
+#     head_count = cart.head_count
+#     total_cost = cost*head_count
+#     context = {
+#         "cart":cart,
+#         "total_cost": total_cost,
+#     }
+#     if request.method=="POST":
+#         #request the PAYTM to transfer the amount after payment of user
+#         param_dict = {
+#             'MID': 'xyxyxyxyx',
+#             'ORDER_ID': str(cart.id),
+#             'TXN_AMOUNT': str(total_cost),
+#             'CUST_ID': request.user.email,
+#             'INDUSTRY_TYPE_ID': 'Retail',
+#             'WEBSITE': 'DEFAULT',
+#             'CHANNEL_ID': 'WEB',
+#             'CALLBACK_URL':'http://127.0.0.1:8000/handlerequest',
+#         }
+#         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
+#         return render(request, 'paytm.html', {'param_dict': param_dict})
+#     return render(request, 'checkout.html', context)
 
 
 @csrf_exempt

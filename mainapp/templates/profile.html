@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,18 +30,25 @@
                             Edit Profile
                         </a>
                         <a class="nav-link text-light" id="v-pills-changepassword-tab" data-toggle="pill" href="#v-pills-changepassword" role="tab" aria-controls="v-pills-changepassword" aria-selected="false">
-                            Change Password
+                            Cart Items
                         </a>
                         <a class="nav-link text-light" id="v-pills-changeemail-tab" data-toggle="pill" href="#v-pills-changeemail" role="tab" aria-controls="v-pills-changeemail" aria-selected="false">
-                            Change Email
+                            Past Bookings
                         </a>
                     </div>
                 </div>
-                <div class="col-8" style="background:white; height:600px; padding-top: 30px;">
+                <div class="col-8" style="background:white; height:1000px; padding-top: 30px;">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            <h2>Account overview</h2>
-                            <h3>Profile</h3>
+                            <div style="display: flex; justify-content:space-between;">
+                                <div>
+                                    <h2>Account overview</h2>
+                                    <h3>Profile</h3>
+                                </div>
+                                <div>
+                                    <img class="rounded-circle" style="border:highpixel solid #f0f0f0;" src="{{ user_obj.profile.avatar.url }}" alt="Profile Photo" class="avatar">
+                                </div>
+                            </div>
                             <table class="table table-hover">
                                 <tbody>
                                     <tr>
@@ -85,16 +94,37 @@
                                 <form method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ user_form.as_p }}
-                                    {{ profile_form.as_p }}
-                                    <p class="text-center "><button type="submit" class="btn btn-outline-info update_button ">Save changes</button></p>
+                                    {{ profile_form|crispy }}
+                                    <p class="text-center "><button type="submit" class="btn btn-primary ">Save changes</button></p>
                                 </form>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-changepassword" role="tabpanel" aria-labelledby="v-pills-changepassword-tab">
-                            .c..
+                        <div class="tab-pane fade" id="v-pills-changepassword" role="tabpanel" aria-labelledby="v-pills-changepassword-tab" style="display: flex; justify-content:space-around; flex-wrap:wrap;">
+                            {% for order in cart_obj %}
+                                {% if order.sell_status is False %}
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                        <h5 class="card-title">{{order.tour.title}}</h5>
+                                        <p class="card-text"></p>
+                                        <a href="/cart-items/" class="btn btn-primary">Visit Cart</a>
+                                        </div>
+                                    </div>
+                                    
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                        <div class="tab-pane fade" id="v-pills-changeemail" role="tabpanel" aria-labelledby="v-pills-changeemail-tab">
-                            ..d.
+                        <div class="tab-pane fade" id="v-pills-changeemail" role="tabpanel" aria-labelledby="v-pills-changeemail-tab" style="display: flex; justify-content:space-around; flex-wrap:wrap;">
+                            {% for order in cart_obj %}
+                            {% if order.sell_status is True %}
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{order.tour.title}}</h5>
+                                    <p class="card-text"></p>
+                                    <a href="/tour-detail/{{order.id}}" class="btn btn-primary">Visit Cart</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -104,6 +134,8 @@
     {% include 'footer.html' %}
 </body>
 </html>
+
+
 <!-- <h1>profile</h1>
 {{ user_obj.password }}
 <h1>{{ user_obj.get_full_name }}</h1>
