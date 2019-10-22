@@ -63,7 +63,7 @@
                 </p>
             </div>
             <div class="main-billing-container">
-                <form method="post" id="submit_creation" action="/add_to_cart/{{tour.id}}" >
+                <form method="post" id="submit_creation" action="/add-to-cart/{{tour.id}}" >
                     {% csrf_token %}
                     <div class="form-group">
                         <input type="number" class="form-control form-control-sm" name="head_count" id="head_count" placeholder="No. of person" required>
@@ -72,6 +72,7 @@
                         <input id="datepicker" type="text" class="form-control" name="tour_date" id="tour_date" rows="18" placeholder="Choose your date" required>
                         </div>
                     <p class="text-center"><button type="submit" class="btn btn-primary">Add to cart</button></p>
+                    <p class="text-center"><button type="submit" class="btn btn-primary">Checkout</button></p>
                 </form>
                 <div class="why-bookmytrip-container">
                     <div class="why-bmt-head">

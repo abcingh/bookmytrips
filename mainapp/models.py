@@ -2,9 +2,18 @@ from django.db import models
 from django.conf import settings
 from django.forms import ModelForm
 from datetime import date
+from django_resized import ResizedImageField
+
 
 User = settings.AUTH_USER_MODEL
 gender_choices = (('male', 'male'), ('female', 'female'))
+
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'profile_image/user_{0}/{1}'.format(instance.user.id, filename)
+
+DEFAULT = 'profile_image/default/default.png'
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
@@ -32,7 +41,8 @@ class Tour(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.CharField(max_length=100)
+    # avatar = models.CharField(max_length=100)
+    avatar = ResizedImageField( upload_to=user_directory_path, default=DEFAULT)
     dob = models.DateField()
     gender = models.CharField(choices=gender_choices, max_length=10)
     description = models.TextField()

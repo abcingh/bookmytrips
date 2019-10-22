@@ -104,3 +104,39 @@
     {% include 'footer.html' %}
 </body>
 </html>
+<!-- <h1>profile</h1>
+{{ user_obj.password }}
+<h1>{{ user_obj.get_full_name }}</h1>
+<h2>{{ user_obj.email }}</h2>
+<h2>{{ user_obj.profile.dob }}</h2>
+<h2>{{ user_obj.profile.gender }}</h2>
+<h2>{{ user_obj.profile.description }}</h2>
+<img src="{{ user_obj.profile.avatar.url }}" alt="" class="avatar">
+
+
+
+=======booked tours===============
+{% for order in cart_obj %}
+    {% if order.sell_status is True %}
+        <br>
+        <a  href="/tour-detail/{{order.id}}"> 
+        order-id=> {{order.id}} | {{order.tour.title}}
+        </a>
+    {% endif %}
+{% endfor %}
+
+<br>
+
+===========tour in cart ===========
+
+{% for order in cart_obj %}
+    {% if order.sell_status is False %}
+    <a  href="/checkout/{{order.id}}"> 
+    <br>
+    order-id=> {{order.id}} {{order.tour.title}}
+    </a>
+    {% endif %}
+{% endfor %} -->
+
+
+
